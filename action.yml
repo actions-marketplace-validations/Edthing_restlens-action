@@ -1,0 +1,55 @@
+name: 'REST Lens API Evaluation'
+description: 'Evaluate OpenAPI specifications against REST Lens best practices and post results to PRs'
+author: 'REST Lens'
+
+branding:
+  icon: 'check-circle'
+  color: 'purple'
+
+inputs:
+  api-token:
+    description: 'REST Lens project API token (create in project settings)'
+    required: true
+  spec-path:
+    description: 'Path to the OpenAPI specification file (supports glob patterns)'
+    required: true
+  fail-on-error:
+    description: 'Fail the action if any error-severity violations are found'
+    required: false
+    default: 'true'
+  fail-on-warning:
+    description: 'Fail the action if any warning-severity violations are found'
+    required: false
+    default: 'false'
+  post-pr-comment:
+    description: 'Post a summary comment on the PR (requires GitHub App installation)'
+    required: false
+    default: 'true'
+  post-inline-comments:
+    description: 'Post inline review comments on violations (requires GitHub App installation)'
+    required: false
+    default: 'true'
+  api-url:
+    description: 'REST Lens API base URL (for self-hosted instances)'
+    required: false
+    default: 'https://api.restlens.dev'
+
+outputs:
+  total-violations:
+    description: 'Total number of violations found'
+  error-count:
+    description: 'Number of error-severity violations'
+  warning-count:
+    description: 'Number of warning-severity violations'
+  info-count:
+    description: 'Number of info-severity violations'
+  evaluation-url:
+    description: 'URL to view full evaluation results'
+  comment-url:
+    description: 'URL of the PR comment (if posted)'
+  passed:
+    description: 'Whether the evaluation passed (no violations above threshold)'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
